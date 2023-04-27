@@ -6,7 +6,6 @@ body {
   max-width: 990px;
   padding: 0 15px;
   margin: 0 auto;
-
 }
 
 .keyboard {
@@ -69,7 +68,7 @@ body {
 }
 
 #Backspace,
-#Enter, 
+#Enter,
 #ShiftLeft,
 #ShiftRight,
 #CapsLock {
