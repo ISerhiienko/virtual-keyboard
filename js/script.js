@@ -71,6 +71,7 @@ const keys = [
 
 
 
+
 function renderKeyboard() {
   const keyboardKeys = document.querySelector('.keyboard__keys');
   let keyButton;
@@ -84,8 +85,6 @@ function renderKeyboard() {
   });
 }
 
-
-
 function showKeyboard() {
    document.body.innerHTML = `
     <div class="wrapper">
@@ -95,7 +94,7 @@ function showKeyboard() {
             <div class="keyboard__keys"></div>
             <div class="keyboard__text">
                 <p>Keyboard designed for Windows OS</p>
-                <p>To switch the language, the combination is: Ctrl + Shift</p>
+                <p>To switch the language, the combination is: <strong>Ctrl + Shift</strong></p>
             </div>
         </div>
     </div>`;
@@ -103,3 +102,40 @@ function showKeyboard() {
 }
 
 showKeyboard();
+
+function pressedCapsLock (capsLock = false) {
+  const allKeys= document.querySelectorAll('.keyboard__key');
+
+  allKeys.forEach(elem => {
+      capsLock ? elem.innerHTML = elem.innerHTML.toUpperCase() : elem.innerHTML = elem.innerHTML.toLowerCase()
+  });
+}
+
+function pressedKey(key)  {
+    if (key.id === 'CapsLock') {
+      key.classList.toggle('active');
+      pressedCapsLock(key.classList.contains('active'));
+    } else
+      key.classList.add('active');
+}
+
+document.addEventListener('keydown', (event) => {
+    const keyboardTextArea = document.querySelector('.keyboard__textarea');
+    const key = document.querySelector(`#${event.code}`);
+
+    if (!key) return;
+
+    if (key.id === 'Tab') event.preventDefault();
+
+    keyboardTextArea.focus();
+    pressedKey(key);
+
+
+});
+
+document.addEventListener('keyup', (event) => {
+    const key = document.querySelector(`#${event.code}`);
+
+    if (key && key.id !== 'CapsLock')
+      key.classList.remove('active');
+});

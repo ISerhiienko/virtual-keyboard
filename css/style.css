@@ -23,11 +23,17 @@ body {
   resize: none;
   font-size: 18px;
   padding: 10px;
+  border-radius: 15px;
+}
+
+.keyboard__textarea:focus {
+  box-shadow: 0 0 3px 5px #555;
 }
 
 .keyboard__text {
   text-align: center;
   font-size: 18px;
+  font-family: monospace;
 }
 
 .keyboard__keys {
@@ -36,6 +42,7 @@ body {
   flex-wrap: wrap;
   margin-top: 20px;
   padding: 15px;
+  border-radius: 15px;
   background-color: #555;
 }
 
@@ -47,11 +54,18 @@ body {
   height: 50px;
   margin: 5px;
   font-size: 18px;
+  font-family: cursive;
   text-align: center;
   background-color: #fefefe;
   box-shadow: 0px 0px 2px 2px #333;
   border-radius: 5px;
   cursor: pointer;
+}
+
+.keyboard__key.active {
+  background: #333;
+  color: #fefefe;
+  box-shadow: 0px 0px 2px 2px #fefefe;
 }
 
 #Backspace,
