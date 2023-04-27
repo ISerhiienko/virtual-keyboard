@@ -1,0 +1,31 @@
+body {
+  margin: 0;
+}
+
+.wrapper {
+  max-width: 1000px;
+  padding: 0 15px;
+  margin: 0 auto;
+
+}
+
+.keyboard {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin-top: 100px;
+}
+
+.keyboard__textarea {
+  width: 80%;
+  height: 150px;
+  resize: none;
+  font-size: 18px;
+  padding: 10px;
+}
+
+.keyboard__text {
+  text-align: center;
+  font-size: 18px;
+}
