@@ -15,46 +15,46 @@ const keys = [
   { key: "Backspace", en: "backspace", system: true },
   { key: "Home", en: "home", system: true },
   { key: "Tab", en: "tab", system: true },
-  { key: "KeyQ", en: "q" },
-  { key: "KeyW", en: "w" },
-  { key: "KeyE", en: "e" },
-  { key: "KeyR", en: "r" },
-  { key: "KeyT", en: "t" },
-  { key: "KeyY", en: "y" },
-  { key: "KeyU", en: "u" },
-  { key: "KeyI", en: "i" },
-  { key: "KeyO", en: "o" },
-  { key: "KeyP", en: "p" },
-  { key: "BracketLeft", en: "[" },
-  { key: "BracketRight", en: "]" },
+  { key: "KeyQ", en: "q", ua: "й" },
+  { key: "KeyW", en: "w", ua: "ц" },
+  { key: "KeyE", en: "e", ua: "у" },
+  { key: "KeyR", en: "r", ua: "к" },
+  { key: "KeyT", en: "t", ua: "е" },
+  { key: "KeyY", en: "y", ua: "н" },
+  { key: "KeyU", en: "u", ua: "г" },
+  { key: "KeyI", en: "i", ua: "ш" },
+  { key: "KeyO", en: "o", ua: "щ" },
+  { key: "KeyP", en: "p", ua: "з" },
+  { key: "BracketLeft", en: "[", ua: "х" },
+  { key: "BracketRight", en: "]", ua: "ї" },
   { key: "Backslash", en: "\\" },
   { key: "Delete", en: "del", system: true },
   { key: "End", en: "end", system: true },
   { key: "CapsLock", en: "caps lock", system: true },
-  { key: "KeyA", en: "a" },
-  { key: "KeyS", en: "s" },
-  { key: "KeyD", en: "d" },
-  { key: "KeyF", en: "f" },
-  { key: "KeyG", en: "g" },
-  { key: "KeyH", en: "h" },
-  { key: "KeyJ", en: "j" },
-  { key: "KeyK", en: "k" },
-  { key: "KeyL", en: "l" },
-  { key: "Semicolon", en: ";" },
-  { key: "Quote", en: "'" },
+  { key: "KeyA", en: "a", ua: "ф" },
+  { key: "KeyS", en: "s", ua: "і" },
+  { key: "KeyD", en: "d", ua: "в" },
+  { key: "KeyF", en: "f", ua: "а" },
+  { key: "KeyG", en: "g", ua: "п" },
+  { key: "KeyH", en: "h", ua: "р" },
+  { key: "KeyJ", en: "j", ua: "о" },
+  { key: "KeyK", en: "k", ua: "л" },
+  { key: "KeyL", en: "l", ua: "д" },
+  { key: "Semicolon", en: ";", ua: "ж" },
+  { key: "Quote", en: "'", ua: "є" },
   { key: "Enter", en: "enter", system: true },
   { key: "PageUp", en: "page up", system: true },
   { key: "ShiftLeft", en: "shift", system: true },
-  { key: "KeyZ", en: "z" },
-  { key: "KeyX", en: "x" },
-  { key: "KeyC", en: "c" },
-  { key: "KeyV", en: "v" },
-  { key: "KeyB", en: "b" },
-  { key: "KeyN", en: "n" },
-  { key: "KeyM", en: "m" },
-  { key: "Comma", en: "," },
-  { key: "Period", en: "." },
-  { key: "Slash", en: "/" },
+  { key: "KeyZ", en: "z", ua: "я" },
+  { key: "KeyX", en: "x", ua: "ч" },
+  { key: "KeyC", en: "c", ua: "с" },
+  { key: "KeyV", en: "v", ua: "м" },
+  { key: "KeyB", en: "b", ua: "и" },
+  { key: "KeyN", en: "n", ua: "т" },
+  { key: "KeyM", en: "m", ua: "ь" },
+  { key: "Comma", en: ",", ua: "б" },
+  { key: "Period", en: ".", ua: "ю" },
+  { key: "Slash", en: "/", ua: "." },
   { key: "ShiftRight", en: "shift", system: true },
   { key: "ArrowUp", en: "▲" },
   { key: "PageDown", en: "page down", system: true },
@@ -69,6 +69,8 @@ const keys = [
   { key: "ArrowRight", en: "►" },
 ];
 
+let languageEn = true;
+
 function renderKeyboard() {
   const keyboardKeys = document.querySelector(".keyboard__keys");
   let keyButton;
@@ -80,7 +82,20 @@ function renderKeyboard() {
     keyButton.innerHTML = keyElement.en;
     keyboardKeys.append(keyButton);
 
-    if (keyElement.system) keyButton.classList.add("key_system");
+    if (keyElement.system) keyButton.classList.add("key__system");
+  });
+}
+
+function changeLang(en = true) {
+  let uaKey;
+  const keysAll = document.querySelectorAll(".keyboard__key");
+
+  keysAll.forEach((elem) => {
+    uaKey = keys.find((item) => item.key === elem.id);
+
+    if (uaKey.ua) {
+      en ? (elem.innerHTML = uaKey.en) : (elem.innerHTML = uaKey.ua);
+    }
   });
 }
 
@@ -93,7 +108,7 @@ function showKeyboard() {
             <div class="keyboard__keys"></div>
             <div class="keyboard__text">
                 <p>Keyboard designed for Windows OS</p>
-                <p>To switch the language, the combination is: <strong>Ctrl + Shift</strong></p>
+                <p>To switch the language, the combination is: <strong>Alt + Shift</strong></p>
             </div>
         </div>
     </div>`;
@@ -101,6 +116,11 @@ function showKeyboard() {
 }
 
 showKeyboard();
+
+if (localStorage.getItem("language") === "ukraine") {
+  languageEn = false;
+  changeLang(languageEn);
+}
 
 function pressedCapsLock(capsLock = false) {
   const allKeys = document.querySelectorAll(".keyboard__key");
@@ -138,6 +158,17 @@ document.addEventListener("keydown", (event) => {
 
   keyboardTextArea.focus();
   pressedKey(key);
+
+  if (
+    ((event.code === "ShiftLeft" || event.code === "ShiftRight") && event.altKey) ||
+    ((event.code === "AltLeft" || event.code === "AltRight") && event.shiftKey)
+  ) {
+    languageEn = !languageEn;
+    languageEn
+      ? localStorage.setItem("language", "english")
+      : localStorage.setItem("language", "ukraine");
+    changeLang(languageEn);
+  }
 });
 
 document.addEventListener("keyup", (event) => {
@@ -156,7 +187,7 @@ document
     if (key.closest(".keyboard__key")) {
       pressedKey(key);
 
-      if (!key.classList.contains("key_system"))
+      if (!key.classList.contains("key__system"))
         keyboardTextArea.value += key.innerHTML;
       else {
         switch (key.id) {
