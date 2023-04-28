@@ -12,9 +12,9 @@ const keys = [
   { key: "Digit0", en: "0" },
   { key: "Minus", en: "-" },
   { key: "Equal", en: "=" },
-  { key: "Backspace", en: "backspace" },
-  { key: "Home", en: "home" },
-  { key: "Tab", en: "tab" },
+  { key: "Backspace", en: "backspace", system: true },
+  { key: "Home", en: "home", system: true },
+  { key: "Tab", en: "tab", system: true },
   { key: "KeyQ", en: "q" },
   { key: "KeyW", en: "w" },
   { key: "KeyE", en: "e" },
@@ -28,9 +28,9 @@ const keys = [
   { key: "BracketLeft", en: "[" },
   { key: "BracketRight", en: "]" },
   { key: "Backslash", en: "\\" },
-  { key: "Delete", en: "del" },
-  { key: "End", en: "end" },
-  { key: "CapsLock", en: "caps lock" },
+  { key: "Delete", en: "del", system: true },
+  { key: "End", en: "end", system: true },
+  { key: "CapsLock", en: "caps lock", system: true },
   { key: "KeyA", en: "a" },
   { key: "KeyS", en: "s" },
   { key: "KeyD", en: "d" },
@@ -42,9 +42,9 @@ const keys = [
   { key: "KeyL", en: "l" },
   { key: "Semicolon", en: ";" },
   { key: "Quote", en: "'" },
-  { key: "Enter", en: "enter" },
-  { key: "PageUp", en: "page up" },
-  { key: "ShiftLeft", en: "shift" },
+  { key: "Enter", en: "enter", system: true },
+  { key: "PageUp", en: "page up", system: true },
+  { key: "ShiftLeft", en: "shift", system: true },
   { key: "KeyZ", en: "z" },
   { key: "KeyX", en: "x" },
   { key: "KeyC", en: "c" },
@@ -55,15 +55,15 @@ const keys = [
   { key: "Comma", en: "," },
   { key: "Period", en: "." },
   { key: "Slash", en: "/" },
-  { key: "ShiftRight", en: "shift" },
+  { key: "ShiftRight", en: "shift", system: true },
   { key: "ArrowUp", en: "▲" },
-  { key: "PageDown", en: "page down" },
-  { key: "ControlLeft", en: "ctrl" },
-  { key: "MetaLeft", en: "win" },
-  { key: "AltLeft", en: "alt" },
-  { key: "Space", en: " " },
-  { key: "AltRight", en: "alt" },
-  { key: "ControlRight", en: "ctrl" },
+  { key: "PageDown", en: "page down", system: true },
+  { key: "ControlLeft", en: "ctrl", system: true },
+  { key: "MetaLeft", en: "win", system: true },
+  { key: "AltLeft", en: "alt", system: true },
+  { key: "Space", en: " ", system: true },
+  { key: "AltRight", en: "alt", system: true },
+  { key: "ControlRight", en: "ctrl", system: true },
   { key: "ArrowLeft", en: "◄" },
   { key: "ArrowDown", en: "▼" },
   { key: "ArrowRight", en: "►" },
@@ -79,6 +79,8 @@ function renderKeyboard() {
     keyButton.setAttribute("id", keyElement.key);
     keyButton.innerHTML = keyElement.en;
     keyboardKeys.append(keyButton);
+
+    if (keyElement.system) keyButton.classList.add("key_system");
   });
 }
 
@@ -142,4 +144,54 @@ document.addEventListener("keyup", (event) => {
   const key = document.querySelector(`#${event.code}`);
 
   if (key && key.id !== "CapsLock") key.classList.remove("active");
+});
+
+document
+  .querySelector(".keyboard__keys")
+  .addEventListener("mousedown", (event) => {
+    const keyboardTextArea = document.querySelector(".keyboard__textarea");
+
+    const key = event.target;
+
+    if (key.closest(".keyboard__key")) {
+      pressedKey(key);
+
+      if (!key.classList.contains("key_system"))
+        keyboardTextArea.value += key.innerHTML;
+      else {
+        switch (key.id) {
+          case "Enter":
+            keyboardTextArea.value += "\n";
+            break;
+          case "Backspace":
+            keyboardTextArea.value = keyboardTextArea.value.slice(
+              0,
+              keyboardTextArea.value.length - 1
+            );
+            break;
+          case "Delete":
+            if (
+              keyboardTextArea.value.length > keyboardTextArea.selectionStart
+            ) {
+              keyboardTextArea.value =
+                keyboardTextArea.value.slice(
+                  0,
+                  keyboardTextArea.selectionStart - 1
+                ) +
+                keyboardTextArea.value.slice(
+                  keyboardTextArea.selectionStart,
+                  keyboardTextArea.length
+                );
+            }
+            keyboardTextArea.focus();
+            break;
+        }
+      }
+    }
+  });
+
+document.querySelector(".keyboard__keys").addEventListener("mouseup", () => {
+  document.querySelectorAll(".keyboard__key").forEach((key) => {
+    if (key && key.id !== "CapsLock") key.classList.remove("active");
+  });
 });

@@ -2,8 +2,12 @@ body {
   margin: 0;
 }
 
+* {
+  box-sizing: border-box;
+}
+
 .wrapper {
-  max-width: 990px;
+  max-width: 1020px;
   padding: 0 15px;
   margin: 0 auto;
 }
@@ -52,13 +56,18 @@ body {
   width: 50px;
   height: 50px;
   margin: 5px;
-  font-size: 18px;
+  padding: 5px;
+  font-size: 15px;
   font-family: cursive;
   text-align: center;
   background-color: #fefefe;
   box-shadow: 0px 0px 2px 2px #333;
   border-radius: 5px;
   cursor: pointer;
+}
+
+.key__system {
+  background: #9e4b4b;
 }
 
 .keyboard__key.active {
