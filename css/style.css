@@ -1,0 +1,89 @@
+body {
+  margin: 0;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+.wrapper {
+  max-width: 1020px;
+  padding: 0 15px;
+  margin: 0 auto;
+}
+
+.keyboard {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin-top: 100px;
+}
+
+.keyboard__textarea {
+  width: 80%;
+  height: 150px;
+  resize: none;
+  font-size: 18px;
+  padding: 10px;
+  border-radius: 15px;
+}
+
+.keyboard__textarea:focus {
+  box-shadow: 0 0 3px 5px #555;
+}
+
+.keyboard__text {
+  text-align: center;
+  font-size: 18px;
+  font-family: monospace;
+}
+
+.keyboard__keys {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  margin-top: 20px;
+  padding: 15px;
+  border-radius: 15px;
+  background-color: #555;
+}
+
+.keyboard__key {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 50px;
+  height: 50px;
+  margin: 5px;
+  padding: 5px;
+  font-size: 15px;
+  font-family: cursive;
+  text-align: center;
+  background-color: #fefefe;
+  box-shadow: 0px 0px 2px 2px #333;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.key__system {
+  background: #b66767;
+}
+
+.keyboard__key.active {
+  background: #333;
+  color: #fefefe;
+  box-shadow: 0px 0px 2px 2px #fefefe;
+}
+
+#Backspace,
+#Enter,
+#ShiftLeft,
+#ShiftRight,
+#CapsLock {
+  width: 100px;
+}
+
+#Space {
+  flex-grow: 1;
+}
